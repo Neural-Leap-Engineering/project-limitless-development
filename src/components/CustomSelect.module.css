@@ -1,0 +1,9 @@
+/* src/components/CustomSelect.module.css */
+.select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+  
