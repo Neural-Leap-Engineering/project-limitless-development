@@ -1,0 +1,78 @@
+{
+    "info": {
+        "name": "Wedding Planner API Collection",
+        "description": "Sample API collection for Wedding Planner System",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get Wedding Events",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "https://api.example.com/weddings",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "example",
+                        "com"
+                    ],
+                    "path": [
+                        "weddings"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Submit RSVP",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"mealPreference\": \"Vegetarian\"\n}"
+                },
+                "url": {
+                    "raw": "https://api.example.com/rsvp",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "example",
+                        "com"
+                    ],
+                    "path": [
+                        "rsvp"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Wedding Venues",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "https://api.example.com/venues",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "example",
+                        "com"
+                    ],
+                    "path": [
+                        "venues"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
