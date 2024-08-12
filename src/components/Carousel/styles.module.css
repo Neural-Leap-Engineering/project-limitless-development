@@ -1,0 +1,53 @@
+.para {
+  font-size: 40px;
+  margin-top: 16rem;
+  margin-left: 2rem;
+  line-height: 60px;
+  padding: 30px;
+  font-family: "Sail", cursive;
+}
+
+.para1:hover {
+  background-color: #f4f8fc;
+  color: black;
+}
+.purchaseButton {
+  padding: 18px;
+  background-color: #9aa497;
+  border: none;
+  margin-left: 4rem;
+  width: 40vh;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Grandstander", cursive;
+}
+.purchaseButton:hover {
+  background-color: #6bbd99;
+}
+@media only screen and (max-width: 765px) {
+  .para {
+    font-size: 20px;
+    margin-top: 2rem;
+    margin-left: 0.5rem;
+    line-height: 30px;
+    padding: 30px;
+  }
+
+  .purchaseButton {
+    padding: 18px;
+
+    margin-left: 2rem;
+    width: 25vh;
+
+    font-size: 15px;
+  }
+  .heroImage {
+    width: 350px;
+    height: 350px;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    object-fit: cover;
+  }
+}
