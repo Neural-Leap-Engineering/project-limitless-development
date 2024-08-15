@@ -1,0 +1,91 @@
+{
+    "info": {
+      "name": "Financial Data API",
+      "_postman_id": "d846d5b6-839e-44e1-a7e7-682b3e905ef8",
+      "description": "A collection of API requests to interact with the Financial Data system.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Get All Financial Data",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:5000/api/financial-data",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "financial-data"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Create New Financial Record",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"type\": \"Owner\",\n    \"name\": \"Alice Wonderland\",\n    \"jobTitle\": \"CFO\",\n    \"email\": \"alice@example.com\",\n    \"phone\": \"1-702-555-1234\",\n    \"equity\": 60,\n    \"status\": \"open\",\n    \"progress\": 70,\n    \"salesData\": {\n        \"labels\": [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"],\n        \"datasets\": [{\n            \"label\": \"Sales\",\n            \"backgroundColor\": \"#3f51b5\",\n            \"data\": [20, 30, 40, 35, 50, 40, 60, 70, 80, 90, 110, 120]\n        }]\n    }\n}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/api/financial-data",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "financial-data"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Update Financial Record by ID",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"name\": \"Updated Name\",\n    \"jobTitle\": \"Updated Job Title\",\n    \"status\": \"partiallyFilled\",\n    \"progress\": 85\n}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/api/financial-data/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "financial-data", "1"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Delete Financial Record by ID",
+        "request": {
+          "method": "DELETE",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:5000/api/financial-data/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "financial-data", "1"]
+          }
+        },
+        "response": []
+      }
+    ]
+  }
+  

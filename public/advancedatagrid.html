@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Performance Monitoring Datagird</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px 250px 10px 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .toolbar .search-box input {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+        .toolbar .buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .toolbar .buttons button {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .toolbar .buttons button:hover {
+            background-color: #0056b3;
+        }
+        .toolbar .buttons .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .toolbar .buttons .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .toolbar .buttons .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .toolbar .buttons .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .toolbar .buttons .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .data-grid {
+            width: 117%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .data-grid th, .data-grid td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .data-grid th {
+            background-color: #007bff;
+            color: white;
+            position: relative;
+        }
+        .data-grid th .sort-icon {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .data-grid th .filter-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .data-grid td {
+            color: #555;
+            white-space: nowrap;
+            background-color: #fff; /* Reset the background color */
+        }
+        .data-grid tr:nth-child(even) td {
+            background-color: #f9f9f9; /* Light gray background for even rows */
+        }
+        .editable {
+            background-color: #fffbdd;
+            cursor: pointer;
+        }
+        .editable:hover {
+            background-color: #fffacc;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-indicator.active {
+            background-color: #28a745;
+        }
+        .status-indicator.inactive {
+            background-color: #dc3545;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            padding: 10px 15px;
+            margin: 0 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .pagination button.active {
+            background-color: #0056b3;
+        }
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            width: 115%;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .filters select, .filters input {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            min-width: 150px;
+        }
+        .filters .apply-filters {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .filters .apply-filters:hover {
+            background-color: #218838;
+        }
+        .export-options {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .export-options button {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #17a2b8;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .export-options button:hover {
+            background-color: #138496;
+        }
+        .sparkline-container {
+            width: 150px;
+            height: 50px;
+        }
+        .chart-container {
+            width: 300px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Financial Performance Monitoring Datagird</h2>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" placeholder="Search list">
+            </div>
+            <div class="buttons">
+                <button>Create Record</button>
+                <button>Import Data</button>
+                <div class="dropdown">
+                    <button class="dropbtn">More Actions</button>
+                    <div class="dropdown-content">
+                        <a href="#">Export to Excel</a>
+                        <a href="#">Export to CSV</a>
+                        <a href="#">Print</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <select>
+                <option value="">Type</option>
+                <option value="Owner">Owner</option>
+                <option value="Business">Business</option>
+            </select>
+            <input type="text" placeholder="Name">
+            <input type="text" placeholder="Email">
+            <input type="text" placeholder="Phone">
+            <input type="date">
+            <select>
+                <option value="">Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+            <button class="apply-filters">Apply Filters</button>
+        </div>
+        <br />
+
+        <!-- Data Grid Table -->
+        <table class="data-grid">
+            <thead>
+                <tr>
+                    <th>Type <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Name <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Job Title <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Email <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Phone <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Equity <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Status <i class="fas fa-sort sort-icon"></i></th>
+                    <th>Progress <i class="fas fa-sort sort-icon"></i></th>
+                    
+                    <th style="text-align: center;">Sales</th>
+                    <th>Actions <i class="fas fa-sort sort-icon"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Owner</td>
+                    <td class="editable">John Doe</td>
+                    <td>CEO</td>
+                    <td class="editable">john@example.com</td>
+                    <td>1-702-555-3693</td>
+                    <td>50%</td>
+                    <td><span class="status-indicator active"></span>Active</td>
+                    <td>
+                        <div style="background-color: #28a745; color: white; width: 80%; height: 12px; border-radius: 4px;"></div>
+                    </td>
+                    
+                    <td>
+                        <div class="chart-container">
+                            <canvas id="barchart1"></canvas>
+                        </div>
+                    </td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Business</td>
+                    <td class="editable">Larry Bells & CO</td>
+                    <td>CTO</td>
+                    <td class="editable">larry@example.com</td>
+                    <td>1-702-539-3493</td>
+                    <td>25%</td>
+                    <td><span class="status-indicator active"></span>Active</td>
+                    <td>
+                        <div style="background-color: #ffc107; color: white; width: 50%; height: 12px; border-radius: 4px;"></div>
+                    </td>
+                    
+                    <td>
+                        <div class="chart-container">
+                            <canvas id="barchart2"></canvas>
+                        </div>
+                    </td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </td>
+                </tr>
+                <!-- More rows can be added dynamically -->
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next</button>
+        </div>
+
+        <!-- Export Options -->
+        <div class="export-options">
+            <button>Export to PDF</button>
+            <button>Export to Excel</button>
+            <button>Print</button>
+        </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include jQuery Sparklines -->
+    <script src="https://cdn.jsdelivr.net/jquery.sparklines/2.1.2/jquery.sparkline.min.js"></script>
+
+    <!-- Chart.js and Sparklines scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sparkline Data
+        const sparklineData1 = [5, 6, 7, 8, 9, 10, 11, 12];
+        const sparklineData2 = [8, 7, 6, 5, 9, 10, 4, 3];
+
+        // Bar Chart Data
+        const barChartData1 = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Sales',
+                backgroundColor: '#007bff',
+                data: [30, 20, 40, 25, 50, 30]
+            }]
+        };
+
+        const barChartData2 = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Sales',
+                backgroundColor: '#ffc107',
+                data: [20, 25, 30, 35, 40, 45]
+            }]
+        };
+
+        // Initialize Sparklines
+        $(function() {
+            $('#sparkline1').sparkline(sparklineData1, { type: 'line', lineColor: '#007bff', fillColor: '#cce5ff' });
+            $('#sparkline2').sparkline(sparklineData2, { type: 'bar', barColor: '#ffc107' });
+        });
+
+        // Initialize Bar Charts
+        const ctx1 = document.getElementById('barchart1').getContext('2d');
+        const barChart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: barChartData1,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('barchart2').getContext('2d');
+        const barChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: barChartData2,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
