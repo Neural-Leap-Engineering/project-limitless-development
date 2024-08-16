@@ -1,0 +1,107 @@
+{
+    "info": {
+      "name": "Financial Dashboard API",
+      "_postman_id": "your-unique-id",
+      "description": "API collection for CRUD operations on financial transactions",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Get All Transactions",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:5000/transactions",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "5000",
+            "path": [
+              "transactions"
+            ]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Create New Transaction",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"asset\": \"Bitcoin\", \"type\": \"Buy\", \"amount\": 1.2, \"date\": \"2024-08-16\"}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/transactions",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "5000",
+            "path": [
+              "transactions"
+            ]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Update Transaction",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"asset\": \"Ethereum\", \"type\": \"Sell\", \"amount\": 2.5, \"date\": \"2024-08-15\"}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/transactions/:id",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "5000",
+            "path": [
+              "transactions",
+              ":id"
+            ]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Delete Transaction",
+        "request": {
+          "method": "DELETE",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:5000/transactions/:id",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "5000",
+            "path": [
+              "transactions",
+              ":id"
+            ]
+          }
+        },
+        "response": []
+      }
+    ]
+  }
+  
