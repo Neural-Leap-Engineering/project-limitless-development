@@ -8,6 +8,9 @@ const FullLayout = lazy(() => import("../layouts/FullLayout/FullLayout.js"));
 /*****Pages******/
 const Dashboard1 = lazy(() => import("../views/dashboards/Dashboard1.js"));
 
+/*****Pages******/
+const Dashboard2 = lazy(() => import("../views/dashboards/Dashboard2.js"));
+
 /*****Tables******/
 const BasicTable = lazy(() => import("../views/tables/BasicTable.js"));
 
@@ -23,6 +26,9 @@ const ExSwitch = lazy(() => import("../views/FormElements/ExSwitch.js"));
 // form layouts
 const FormLayouts = lazy(() => import("../views/FormLayouts/FormLayouts.js"));
 
+/*****Custom DataGrid*****/
+const CustomDataGrid = lazy(() => import("../components/dashboard1-components/CustomDataGrid.js"));
+
 /*****Routes******/
 
 const ThemeRoutes = [
@@ -30,8 +36,9 @@ const ThemeRoutes = [
     path: "/",
     element: <FullLayout />,
     children: [
-      { path: "/", element: <Navigate to="dashboards/dashboard1" /> },
+      { path: "/", element: <Navigate to="datagrid" /> },
       { path: "dashboards/dashboard1", exact: true, element: <Dashboard1 /> },
+      { path: "dashboards/dashboard2", exact: true, element: <Dashboard2 /> },
       { path: "tables/basic-table", element: <BasicTable /> },
       { path: "/form-layouts/form-layouts", element: <FormLayouts /> },
       { path: "/form-elements/autocomplete", element: <ExAutoComplete /> },
@@ -40,6 +47,7 @@ const ThemeRoutes = [
       { path: "/form-elements/radio", element: <ExRadio /> },
       { path: "/form-elements/slider", element: <ExSlider /> },
       { path: "/form-elements/switch", element: <ExSwitch /> },
+      { path: "datagrid", exact: true, element: <CustomDataGrid /> },
     ],
   },
 ];
