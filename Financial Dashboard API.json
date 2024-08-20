@@ -1,107 +1,181 @@
 {
-    "info": {
-      "name": "Financial Dashboard API",
-      "_postman_id": "your-unique-id",
-      "description": "API collection for CRUD operations on financial transactions",
+  "info": {
+      "name": "Transactions and Tasks API",
+      "description": "Postman collection for managing transactions and tasks using the SQLite backend.",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
+  },
+  "item": [
       {
-        "name": "Get All Transactions",
-        "request": {
-          "method": "GET",
-          "header": [],
-          "url": {
-            "raw": "http://localhost:5000/transactions",
-            "protocol": "http",
-            "host": [
-              "localhost"
-            ],
-            "port": "5000",
-            "path": [
-              "transactions"
-            ]
+          "name": "Get All Transactions",
+          "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                  "raw": "http://localhost:5000/transactions",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["transactions"]
+              }
           }
-        },
-        "response": []
       },
       {
-        "name": "Create New Transaction",
-        "request": {
-          "method": "POST",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "body": {
-            "mode": "raw",
-            "raw": "{\"asset\": \"Bitcoin\", \"type\": \"Buy\", \"amount\": 1.2, \"date\": \"2024-08-16\"}"
-          },
-          "url": {
-            "raw": "http://localhost:5000/transactions",
-            "protocol": "http",
-            "host": [
-              "localhost"
-            ],
-            "port": "5000",
-            "path": [
-              "transactions"
-            ]
+          "name": "Add New Transaction",
+          "request": {
+              "method": "POST",
+              "header": [
+                  {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                  }
+              ],
+              "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"asset\": \"Stock\",\n    \"type\": \"Buy\",\n    \"amount\": 1500,\n    \"date\": \"2024-08-20\"\n}"
+              },
+              "url": {
+                  "raw": "http://localhost:5000/transactions",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["transactions"]
+              }
           }
-        },
-        "response": []
       },
       {
-        "name": "Update Transaction",
-        "request": {
-          "method": "PUT",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            }
-          ],
-          "body": {
-            "mode": "raw",
-            "raw": "{\"asset\": \"Ethereum\", \"type\": \"Sell\", \"amount\": 2.5, \"date\": \"2024-08-15\"}"
-          },
-          "url": {
-            "raw": "http://localhost:5000/transactions/:id",
-            "protocol": "http",
-            "host": [
-              "localhost"
-            ],
-            "port": "5000",
-            "path": [
-              "transactions",
-              ":id"
-            ]
+          "name": "Update Transaction",
+          "request": {
+              "method": "PUT",
+              "header": [
+                  {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                  }
+              ],
+              "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"asset\": \"Bond\",\n    \"type\": \"Sell\",\n    \"amount\": 2000,\n    \"date\": \"2024-08-21\"\n}"
+              },
+              "url": {
+                  "raw": "http://localhost:5000/transactions/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["transactions", ":id"],
+                  "variable": [
+                      {
+                          "key": "id",
+                          "value": "1"
+                      }
+                  ]
+              }
           }
-        },
-        "response": []
       },
       {
-        "name": "Delete Transaction",
-        "request": {
-          "method": "DELETE",
-          "header": [],
-          "url": {
-            "raw": "http://localhost:5000/transactions/:id",
-            "protocol": "http",
-            "host": [
-              "localhost"
-            ],
-            "port": "5000",
-            "path": [
-              "transactions",
-              ":id"
-            ]
+          "name": "Delete Transaction",
+          "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                  "raw": "http://localhost:5000/transactions/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["transactions", ":id"],
+                  "variable": [
+                      {
+                          "key": "id",
+                          "value": "1"
+                      }
+                  ]
+              }
           }
-        },
-        "response": []
+      },
+      {
+          "name": "Get All Tasks",
+          "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                  "raw": "http://localhost:5000/tasks",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["tasks"]
+              }
+          }
+      },
+      {
+          "name": "Add New Task",
+          "request": {
+              "method": "POST",
+              "header": [
+                  {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                  }
+              ],
+              "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"summary\": \"New Task\",\n    \"status\": \"To Do\",\n    \"priority\": \"High\",\n    \"progress\": 0,\n    \"dueDate\": null,\n    \"active\": 1,\n    \"link\": \"https://www.example.com\",\n    \"avatar\": \"https://via.placeholder.com/40\",\n    \"amount\": 5000\n}"
+              },
+              "url": {
+                  "raw": "http://localhost:5000/tasks",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["tasks"]
+              }
+          }
+      },
+      {
+          "name": "Update Task",
+          "request": {
+              "method": "PUT",
+              "header": [
+                  {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                  }
+              ],
+              "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"summary\": \"Updated Task\",\n    \"status\": \"In Progress\",\n    \"priority\": \"Medium\",\n    \"progress\": 50,\n    \"dueDate\": \"2024-09-01\",\n    \"active\": 1,\n    \"link\": \"https://www.example.com\",\n    \"avatar\": \"https://via.placeholder.com/40\",\n    \"amount\": 3000\n}"
+              },
+              "url": {
+                  "raw": "http://localhost:5000/tasks/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["tasks", ":id"],
+                  "variable": [
+                      {
+                          "key": "id",
+                          "value": "1"
+                      }
+                  ]
+              }
+          }
+      },
+      {
+          "name": "Delete Task",
+          "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                  "raw": "http://localhost:5000/tasks/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["tasks", ":id"],
+                  "variable": [
+                      {
+                          "key": "id",
+                          "value": "1"
+                      }
+                  ]
+              }
+          }
       }
-    ]
-  }
-  
+  ]
+}
