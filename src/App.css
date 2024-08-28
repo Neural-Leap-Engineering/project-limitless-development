@@ -1,0 +1,78 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.app {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-header, .grid-body {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr); /* Time column + 7 days */
+  width: 100%;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+.day-header {
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+
+.time-column {
+  display: contents; /* Each hour column and time slots will align */
+}
+
+.time-label {
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  text-align: right;
+  background-color: #f7f7f7;
+}
+
+.time-slot {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  min-height: 40px;
+  position: relative;
+}
+
+.event {
+  background-color: #2196F3;
+  color: white;
+  padding: 2px 5px;
+  margin: 2px;
+  position: absolute;
+  width: 95%;
+  top: 0;
+  left: 2%;
+  border-radius: 3px;
+}
