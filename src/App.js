@@ -8,7 +8,7 @@ import GlobalContext from "./context/GlobalContext";
 import EventModal from "./components/EventModal";
 
 function App() {
-  const [currenMonth, setCurrentMonth] = useState(getMonth());
+  const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex, showEventModal } = useContext(GlobalContext);
 
   // Add dark mode state
@@ -20,14 +20,12 @@ function App() {
   const [shareEmail, setShareEmail] = useState("");
   const [sharePermission, setSharePermission] = useState("view");
 
+  // Push Notification State
+  const [isPushEnabled, setIsPushEnabled] = useState(false);
+
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
-
-  // Toggle dark mode
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   // Apply dark mode class
   useEffect(() => {
@@ -37,6 +35,11 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   // Handle sharing calendar
   const handleShare = () => {
@@ -48,12 +51,65 @@ function App() {
     }
   };
 
+  // Push Notification Functions
+  const initializePushNotifications = async () => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      try {
+        const registration = await navigator.serviceWorker.register('/service-worker.js');
+        console.log('Service Worker registered');
+
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: 'YOUR_PUBLIC_VAPID_KEY'
+          });
+          console.log('Push Notification subscription:', subscription);
+          setIsPushEnabled(true);
+        }
+      } catch (error) {
+        console.error('Error setting up push notifications:', error);
+      }
+    }
+  };
+
+  const sendPushNotification = async (title, body) => {
+    if (isPushEnabled) {
+      try {
+        await fetch('/api/send-notification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, body }),
+        });
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
+  };
+
+  // Example usage: Send a notification for a new event
+  const handleNewEvent = (event) => {
+    // Your existing new event logic here
+    // ...
+
+    // Send a push notification
+    sendPushNotification('New Event Added', `Event "${event.title}" has been added to your calendar.`);
+  };
+
+  // Example usage: Send a notification for an event reminder
+  const handleEventReminder = (event) => {
+    sendPushNotification('Event Reminder', `Don't forget: "${event.title}" is starting soon!`);
+  };
+
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
 
       <div className={`h-screen flex flex-col ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
         <CalendarHeader />
+        
         {/* Dark Mode Toggle Button */}
         <button
           onClick={toggleDarkMode}
@@ -62,7 +118,7 @@ function App() {
           {isDarkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
         </button>
         
-        {/* Share Calendar Button - moved slightly to the left */}
+        {/* Share Calendar Button */}
         <button
           onClick={() => setShowShareModal(true)}
           className="absolute top-4 right-40 p-2 bg-blue-500 text-white rounded-full focus:outline-none"
@@ -70,9 +126,17 @@ function App() {
           Share Calendar
         </button>
 
+        {/* Push Notification Toggle Button */}
+        <button
+          onClick={initializePushNotifications}
+          className="absolute top-4 right-80 p-2 bg-green-500 text-white rounded-full focus:outline-none"
+        >
+          {isPushEnabled ? "Disable Notifications" : "Enable Notifications"}
+        </button>
+
         <div className="flex flex-1">
           <Sidebar />
-          <Month month={currenMonth} />
+          <Month month={currentMonth} />
         </div>
 
         {/* Share Modal */}
