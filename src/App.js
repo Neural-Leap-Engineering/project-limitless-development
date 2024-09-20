@@ -81,7 +81,7 @@ function App() {
   const sendPushNotification = async (title, body) => {
     if (isPushEnabled) {
       try {
-        await fetch("/api/send-notification", {
+        await fetch("/api/notifications/push", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -114,6 +114,91 @@ function App() {
     );
   };
 
+  // API Endpoints
+
+  // Fetch events from Google Calendar
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch("/api/events");
+      const events = await response.json();
+      console.log("Fetched events:", events);
+      // Handle the events data (e.g., update state)
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  // Export events to CSV/Excel
+  const exportEvents = async () => {
+    try {
+      const response = await fetch("/api/events/export", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ format: "csv" }), // Change to "excel" if needed
+      });
+      const data = await response.blob();
+      // Handle file download
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "events.csv"); // Change extension for Excel
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error exporting events:", error);
+    }
+  };
+
+  // Send email notifications
+  const sendEmailNotification = async (subject, body) => {
+    try {
+      await fetch("/api/notifications/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ subject, body }),
+      });
+    } catch (error) {
+      console.error("Error sending email notification:", error);
+    }
+  };
+
+  // Sync events with external calendars (Outlook, iCal)
+  const syncWithExternalCalendars = async () => {
+    try {
+      const response = await fetch("/api/events/sync", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log("External calendar sync result:", result);
+    } catch (error) {
+      console.error("Error syncing with external calendars:", error);
+    }
+  };
+
+  // Register for paid events
+  const registerForEvent = async (eventId, paymentDetails) => {
+    try {
+      const response = await fetch(`/api/events/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventId, paymentDetails }),
+      });
+      const result = await response.json();
+      console.log("Event registration result:", result);
+    } catch (error) {
+      console.error("Error registering for event:", error);
+    }
+  };
+
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
@@ -132,7 +217,7 @@ function App() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4 me-2"
+              className="w-4 h-4 me-2"
               width="1em"
               height="1em"
               viewBox="0 0 24 24"
@@ -146,19 +231,16 @@ function App() {
           </button>
 
           {/* Push Notification Toggle Button */}
-          {/* Push Notification Toggle Button */}
           <button
             onClick={initializePushNotifications}
             className="inline-flex items-center space-x-2 text-white bg-green-500 hover:bg-green-400 focus:outline-none focus:ring-1 font-medium rounded-full focus:ring-green-400 lg:text-sm text-xs lg:px-5 px-1 lg:py-2.5 py-1 me-2 mb-2 text-center"
           >
-            {/* Conditional SVG for Enable/Disable */}
             {isPushEnabled ? (
-              // Disable Icon
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
                 height="1em"
-                class="w-4 h-4 me-2"
+                className="w-4 h-4 me-2"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -167,12 +249,11 @@ function App() {
                 ></path>
               </svg>
             ) : (
-              // Enable Icon
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
                 height="1em"
-                class="w-4 h-4 me-2"
+                className="w-4 h-4 me-2"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -181,7 +262,6 @@ function App() {
                 ></path>
               </svg>
             )}
-            {/* Text for Enable/Disable */}
             <span className="hidden sm:inline">
               {isPushEnabled ? "Disable Notifications" : "Enable Notifications"}
             </span>
@@ -197,7 +277,7 @@ function App() {
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
                 height="1em"
-                class="w-4 h-4 me-2"
+                className="w-4 h-4 me-2"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -210,7 +290,7 @@ function App() {
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
                 height="1em"
-                class="w-4 h-4 me-2"
+                className="w-4 h-4 me-2"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -219,7 +299,9 @@ function App() {
                 ></path>
               </svg>
             )}
-            <span className="hidden sm:inline">{isDarkMode ? "Dark Mode" : "Light Mode"}</span>
+            <span className="hidden sm:inline">
+              {isDarkMode ? "Dark Mode" : "Light Mode"}
+            </span>
           </button>
         </div>
 

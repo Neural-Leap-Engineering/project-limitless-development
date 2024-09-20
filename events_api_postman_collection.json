@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "166426c8-b91e-4c88-bc12-540fb21a79f7",
+		"name": "Limitless",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30102257",
+		"_collection_link": "https://galactic-desert-161188.postman.co/workspace/My-Workspace~d61e2918-d31a-4037-821e-9c8b42aa8095/collection/30102257-166426c8-b91e-4c88-bc12-540fb21a79f7?action=share&source=collection_link&creator=30102257"
+	},
+	"item": [
+		{
+			"name": "Events",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "event by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Updated Event Name\",\n  \"date\": \"2024-09-21T12:00:00.000Z\",\n  \"description\": \"Updated event description.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/events/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"events",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Meeting with Team\",\n  \"date\": \"2024-09-21T10:00:00.000Z\",\n  \"description\": \"Discuss project updates.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update an event",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Updated Event Name\",\n  \"date\": \"2024-09-21T12:00:00.000Z\",\n  \"description\": \"Updated event description.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/events/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"events",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE an event",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/events/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"events",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
