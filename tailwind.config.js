@@ -26,6 +26,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         "1/5": "1fr 5fr"
+      },
+      fontSize: {
+        'xxs': '0.6rem', // New custom size, smaller than xs
       }
     },
   },

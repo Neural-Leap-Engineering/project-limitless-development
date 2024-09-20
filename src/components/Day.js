@@ -2,28 +2,39 @@ import dayjs from "dayjs";
 import React, { useContext, useState, useEffect } from "react";
 import GlobalContext from "../context/GlobalContext";
 
-export default function Day({ day, rowIdx, events }) {
+export default function Day({ day, rowIdx }) {
   const [dayEvents, setDayEvents] = useState([]);
-  const { setDaySelected, setShowEventModal, setSelectedEvent } = useContext(GlobalContext);
+  const {
+    setDaySelected,
+    setShowEventModal,
+    filteredEvents,
+    setSelectedEvent,
+  } = useContext(GlobalContext);
 
   useEffect(() => {
-    const filteredEvents = events.filter(
-      (evt) => dayjs(evt.start.dateTime || evt.start.date).format("DD-MM-YY") === day.format("DD-MM-YY")
+    const events = filteredEvents.filter(
+      (evt) =>
+        dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
     );
-    setDayEvents(filteredEvents);
-  }, [events, day]);
+    setDayEvents(events);
+  }, [filteredEvents, day]);
 
   function getCurrentDayClass() {
     return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
-      ? "bg-blue-600 text-white rounded-full w-7"
+      ? "bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center"
       : "";
   }
-
   return (
     <div className="border border-gray-200 flex flex-col">
       <header className="flex flex-col items-center">
-        {rowIdx === 0 && <p className="text-sm mt-1">{day.format("ddd").toUpperCase()}</p>}
-        <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}>
+        {rowIdx === 0 && (
+          <p className="text-xxs mt-1 text-gray-500 font-semibold">
+            {day.format("ddd").toUpperCase()}
+          </p>
+        )}
+        <p
+          className={`text-sm p-1 my-1 text-center  ${getCurrentDayClass()}`}
+        >
           {day.format("DD")}
         </p>
       </header>
@@ -38,9 +49,9 @@ export default function Day({ day, rowIdx, events }) {
           <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
-            className="bg-blue-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate"
+            className={`bg-${evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
           >
-            {evt.summary}
+            {evt.title}
           </div>
         ))}
       </div>
